@@ -1,0 +1,218 @@
+{
+    "info": {
+      "_postman_id": "d101c0e2-49d3-4b5d-94c1-0a0b37fc8a0d",
+      "name": "Mutual Fund API Collection",
+      "description": "A collection of endpoints for testing the Mutual Fund API",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Login",
+        "request": {
+          "method": "POST",
+          "header": [],
+          "body": {
+            "mode": "raw",
+            "raw": "{\"username\":\"admin\",\"password\":\"password\"}"
+          },
+          "url": {
+            "raw": "http://localhost:8000/login",
+            "protocol": "http",
+            "host": [
+              "localhost"
+            ],
+            "port": "8000",
+            "path": [
+              "login"
+            ]
+          }
+        },
+        "response": [
+          {
+            "status": "200 OK",
+            "code": 200,
+            "name": "Success Response",
+            "body": "{\"access_token\":\"<your_access_token>\",\"token_type\":\"bearer\"}"
+          },
+          {
+            "status": "401 Unauthorized",
+            "code": 401,
+            "name": "Failure Response",
+            "body": "{\"detail\":\"Incorrect username or password\"}"
+          }
+        ]
+      },
+      {
+        "name": "Get Fund Families",
+        "request": {
+          "method": "GET",
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer <your_access_token>",
+              "description": "JWT access token"
+            }
+          ],
+          "url": {
+            "raw": "http://localhost:8000/fund_families",
+            "protocol": "http",
+            "host": [
+              "localhost"
+            ],
+            "port": "8000",
+            "path": [
+              "fund_families"
+            ]
+          }
+        },
+        "response": [
+          {
+            "status": "200 OK",
+            "code": 200,
+            "name": "Success Response",
+            "body": "{\"families\":[\"Family A\",\"Family B\"]}"
+          },
+          {
+            "status": "401 Unauthorized",
+            "code": 401,
+            "name": "Failure Response",
+            "body": "{\"detail\":\"Could not validate credentials\"}"
+          }
+        ]
+      },
+      {
+        "name": "Fetch Fund Schemes",
+        "request": {
+          "method": "GET",
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer <your_access_token>",
+              "description": "JWT access token"
+            }
+          ],
+          "url": {
+            "raw": "http://localhost:8000/funds/Family A",
+            "protocol": "http",
+            "host": [
+              "localhost"
+            ],
+            "port": "8000",
+            "path": [
+              "funds",
+              "Family A"
+            ]
+          }
+        },
+        "response": [
+          {
+            "status": "200 OK",
+            "code": 200,
+            "name": "Success Response",
+            "body": "[{\"Scheme_Code\":123,\"Scheme_Name\":\"Scheme A\",\"Net_Asset_Value\":100.0}]"
+          },
+          {
+            "status": "401 Unauthorized",
+            "code": 401,
+            "name": "Failure Response",
+            "body": "{\"detail\":\"Could not validate credentials\"}"
+          },
+          {
+            "status": "404 Not Found",
+            "code": 404,
+            "name": "Failure Response",
+            "body": "{\"detail\":\"Failed to fetch schemes\"}"
+          }
+        ]
+      },
+      {
+        "name": "Purchase Fund Units",
+        "request": {
+          "method": "POST",
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer <your_access_token>",
+              "description": "JWT access token"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\"scheme_code\":\"123\",\"units\":10}"
+          },
+          "url": {
+            "raw": "http://localhost:8000/funds/purchase",
+            "protocol": "http",
+            "host": [
+              "localhost"
+            ],
+            "port": "8000",
+            "path": [
+              "funds",
+              "purchase"
+            ]
+          }
+        },
+        "response": [
+          {
+            "status": "200 OK",
+            "code": 200,
+            "name": "Success Response",
+            "body": "{\"message\":\"Purchased 10 units of Scheme A\",\"current_value\":100.0}"
+          },
+          {
+            "status": "401 Unauthorized",
+            "code": 401,
+            "name": "Failure Response",
+            "body": "{\"detail\":\"Could not validate credentials\"}"
+          },
+          {
+            "status": "404 Not Found",
+            "code": 404,
+            "name": "Failure Response",
+            "body": "{\"detail\":\"Failed to fetch scheme value\"}"
+          }
+        ]
+      },
+      {
+        "name": "Get Purchased Funds",
+        "request": {
+          "method": "GET",
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer <your_access_token>",
+              "description": "JWT access token"
+            }
+          ],
+          "url": {
+            "raw": "http://localhost:8000/funds/purchases",
+            "protocol": "http",
+            "host": [
+              "localhost"
+            ],
+            "port": "8000",
+            "path": [
+              "funds",
+              "purchases"
+            ]
+          }
+        },
+        "response": [
+          {
+            "status": "200 OK",
+            "code": 200,
+            "name": "Success Response",
+            "body": "[{\"scheme_name\":\"Scheme A\",\"units\":10,\"purchase_time\":\"2024-10-05T12:34:56\",\"value\":100.0}]"
+          },
+          {
+            "status": "401 Unauthorized",
+            "code": 401,
+            "name": "Failure Response",
+            "body": "{\"detail\":\"Could not validate credentials\"}"
+          }
+        ]
+      }
+    ]
+  }
+  
