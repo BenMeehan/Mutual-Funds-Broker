@@ -1,0 +1,12 @@
+.App {
+  text-align: center;
+}
+
+.container {
+  max-width: 500px;
+  margin: auto;
+}
+
+button {
+  margin-left: 10px;
+}
